@@ -57,12 +57,6 @@ class WaltIdSandboxSigner: Signer {
     override fun getAuthor() = Author(userId, domainId)
 
     @Serializable
-    data class SignChallengeRequest(
-        val payload: String,
-        val privateKey: String,
-    )
-
-    @Serializable
     data class SignChallengeResponse(
         val canonicalPayload: String,
         val hash: String,
