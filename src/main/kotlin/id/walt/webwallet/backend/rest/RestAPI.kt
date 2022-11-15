@@ -8,6 +8,7 @@ import id.walt.issuer.backend.IssuerController
 import id.walt.onboarding.backend.OnboardingController
 import id.walt.verifier.backend.VerifierController
 import id.walt.webwallet.backend.auth.AuthController
+import id.walt.webwallet.backend.clients.metaco.routers.MetacoRouter
 import id.walt.webwallet.backend.wallet.DidWebRegistryController
 import id.walt.webwallet.backend.wallet.WalletController
 import io.javalin.Javalin
@@ -35,6 +36,7 @@ object RestAPI {
             AuthController.routes
             WalletController.routes
             DidWebRegistryController.routes
+            MetacoRouter.routes()
         }
         ApiBuilder.path("verifier-api") {
             VerifierController.routes
