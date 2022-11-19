@@ -10,9 +10,11 @@ import io.javalin.http.Handler
 
 object WalletContextManager : WaltIdContextManager() {
 
-    val userContexts: LoadingCache<String, Context> = CacheBuilder.newBuilder().maximumSize(256).build(UserContextLoader)
+    val userContexts: LoadingCache<String, Context> = CacheBuilder.newBuilder()
+        .maximumSize(256)
+        .build(UserContextLoader)
 
-    fun getUserContext(userInfo: UserInfo) = userContexts.get(userInfo.id)
+    fun getUserContext(userInfo: UserInfo): Context = userContexts.get(userInfo.id)
 
     val preRequestHandler
         get() = Handler { ctx -> JWTService.getUserInfo(ctx)?.let { setCurrentContext(getUserContext(it)) } }

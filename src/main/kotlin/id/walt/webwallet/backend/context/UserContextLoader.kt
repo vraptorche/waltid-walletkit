@@ -7,6 +7,7 @@ import id.walt.services.hkvstore.FileSystemHKVStore
 import id.walt.services.hkvstore.FilesystemStoreConfig
 import id.walt.services.keystore.HKVKeyStoreService
 import id.walt.services.vcstore.HKVVcStoreService
+import io.ktor.util.*
 import java.security.MessageDigest
 
 object UserContextLoader : CacheLoader<String, Context>() {
@@ -19,12 +20,13 @@ object UserContextLoader : CacheLoader<String, Context>() {
     }
 
     override fun load(key: String): UserContext {
-        //TODO: get user context preferences from user database
+        //TBD: get user context preferences from user database
+        val cacheKey = key.encodeBase64()
         return UserContext(
             key,
             HKVKeyStoreService(),
             HKVVcStoreService(),
-            FileSystemHKVStore(FilesystemStoreConfig("${WALTID_DATA_ROOT}/data/${key}"))
+            FileSystemHKVStore(FilesystemStoreConfig("${WALTID_DATA_ROOT}/data/${cacheKey}"))
         )
     }
 }
